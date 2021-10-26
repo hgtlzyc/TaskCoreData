@@ -29,7 +29,9 @@ class TaskTableViewCell: UITableViewCell {
     func updateViews() {
         guard let task = task else { return }
         taskNameLabel.text = task.name
+        
         let image = task.isComplete ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
+        
         completioButton.setBackgroundImage(image, for: .normal)
     }
     

@@ -42,9 +42,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        CoreDataStack.saveContextAndFetch()
+        CoreDataStack.saveContext()
     }
-
 
 }
 

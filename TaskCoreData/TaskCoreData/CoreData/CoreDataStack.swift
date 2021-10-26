@@ -21,15 +21,14 @@ enum CoreDataStack {
         return container
     }()
     
-    static var context: NSManagedObjectContext {
+    static var context: NSManagedObjectContext = {
         container.viewContext
-    }
+    }()
     
-    static func saveContextAndFetch() {
+    static func saveContext() {
         if context.hasChanges {
             do {
                 try context.save()
-                TaskController.shared.fetchTasks()
             } catch  {
                 print("Error saving context \(error)")
             }

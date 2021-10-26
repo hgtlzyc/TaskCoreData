@@ -12,21 +12,25 @@ class TaskController {
     static let shared = TaskController()
     
     
-    private lazy var fetchAllTasksRequest: NSFetchRequest< Task > = {
-        let request = NSFetchRequest< Task >(entityName: "Task")
-        
-        request.predicate = NSPredicate(value: true)
-        
-        return request
-    }()
     
+    let fetchAllTasksRequest: NSFetchRequest< Task > = Task.fetchRequest()
+//    private lazy var fetchAllTasksRequest: NSFetchRequest< Task > = {
+//        let request = NSFetchRequest< Task >(entityName: "Task")
+//
+//        request.predicate = NSPredicate(value: true)
+//
+//        return request
+//    }()
+//
     var tasks: [Task] = []
+    
     
     // MARK: - CRUD Functions
     
     func createTaskWith(name: String, notes: String?, dueDate: Date?){
         Task(title: name, notes: notes, dueDate: dueDate)
-        CoreDataStack.saveContextAndFetch()
+        CoreDataStack.saveContext()
+        fetchTasks()
     }
     
     func fetchTasks(){
@@ -42,17 +46,20 @@ class TaskController {
         task.name = name
         task.notes = notes
         task.dueDate = dueDate
-        CoreDataStack.saveContextAndFetch()
+        CoreDataStack.saveContext()
+        fetchTasks()
     }
     
     func toggleIsComplete(task: Task){
         task.isComplete.toggle()
-        CoreDataStack.saveContextAndFetch()
+        CoreDataStack.saveContext()
+        fetchTasks()
     }
     
     func deleteTask(_ task: Task) {
         CoreDataStack.context.delete(task)
-        CoreDataStack.saveContextAndFetch()
+        CoreDataStack.saveContext()
+        fetchTasks()
     }
     
     
